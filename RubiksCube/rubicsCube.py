@@ -1,6 +1,7 @@
 import random
 import pytest
 
+
 class rubiksEnv:
     rubiksCube = {
         0: [[0, 0, 0],
@@ -45,7 +46,26 @@ class rubiksEnv:
                   self.rubiksCube[5][i])
 
     def step(self, move):
-        if move == "e":
+        if move == "d":
+            tempRot = [self.rubiksCube[5][0],
+                       self.rubiksCube[5][1],
+                       self.rubiksCube[5][2]]
+            temp = ["", "", "", ""]
+            for i in range(4):
+                if i < 3:
+                    temp[i + 1] = self.rubiksCube[i][2]
+                else:
+                    temp[0] = self.rubiksCube[i][2]
+            for i in range(len(temp)):
+                self.rubiksCube[i][2] = temp[i]
+            for i in range(len(tempRot)):
+                # self.rubiksCube[4][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]] This makes it go
+                # antiClockwise
+                self.rubiksCube[5][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
+        elif move == "u":
+            tempRot = [self.rubiksCube[4][0],
+                       self.rubiksCube[4][1],
+                       self.rubiksCube[4][2]]
             temp = ["", "", "", ""]
             for i in range(4):
                 if i < 3:
@@ -54,8 +74,10 @@ class rubiksEnv:
                     temp[0] = self.rubiksCube[i][0]
             for i in range(len(temp)):
                 self.rubiksCube[i][0] = temp[i]
-            for i in range(len(self.rubiksCube[4][i])):
-
+            for i in range(len(tempRot)):
+                # self.rubiksCube[4][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]] This makes it go
+                # antiClockwise
+                self.rubiksCube[4][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
 
     def main(self):
         self.displayCube()
