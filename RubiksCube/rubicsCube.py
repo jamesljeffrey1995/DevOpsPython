@@ -3,6 +3,7 @@ import pytest
 
 rotateSide = [[4, 1, 5, 3], [1, 5, 3, 4]]
 rotateTop = [[0,1,2,3],[1,2,3,0]]
+rotateFront = [[0,4,2,5],[4,2,5,0]]
 
 
 class rubiksEnv:
@@ -145,6 +146,22 @@ class rubiksEnv:
                 self.rubiksCube[5][i] = [tempRotBottom[0][2 - i], tempRotBottom[1][2 - i], tempRotBottom[2][2 - i]]
                 self.rubiksCube[4][i] = [tempRotTop[2][i], tempRotTop[1][i], tempRotTop[0][i]]
                 # self.rubiksCube[2][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
+        elif move == "z":
+            tempZAxis = []
+            tempRotFront = [self.rubiksCube[1][0],
+                          self.rubiksCube[1][1],
+                          self.rubiksCube[1][2]]
+            tempRotBack = [self.rubiksCube[3][0],
+                             self.rubiksCube[3][1],
+                             self.rubiksCube[3][2]]
+            for i in range(4):
+                tempZAxis.append(self.rubiksCube[int(rotateFront[0][i])])
+            for i in range(4):
+                self.rubiksCube[int(rotateFront[1][i])] = tempZAxis[i]
+            for i in range(len(tempRotFront)):
+                self.rubiksCube[1][i] = [tempRotFront[2][i], tempRotFront[1][i], tempRotFront[0][i]]
+                self.rubiksCube[3][i] = [tempRotBack[0][2-i], tempRotBack[1][2-i], tempRotBack[2][2-i]]
+                    # self.rubiksCube[2][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
 
 
     def main(self):
