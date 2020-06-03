@@ -1,7 +1,5 @@
-
-
 def main():
-	num = int(input("Enter a number: "))
+	num = int(input("Enter a number(s),Seperate with comma: "))
 	factorialCalc(num)
 
 def factorialCalc(num):
