@@ -162,6 +162,18 @@ class rubiksEnv:
                 self.rubiksCube[1][i] = [tempRotFront[2][i], tempRotFront[1][i], tempRotFront[0][i]]
                 self.rubiksCube[3][i] = [tempRotBack[0][2-i], tempRotBack[1][2-i], tempRotBack[2][2-i]]
                     # self.rubiksCube[2][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
+        elif move == "f":
+            tempRotFront = [self.rubiksCube[1][0],
+                            self.rubiksCube[1][1],
+                            self.rubiksCube[1][2]]
+            for i in range(len(tempRotFront)):
+                self.rubiksCube[1][i] = [tempRotFront[2][i], tempRotFront[1][i], tempRotFront[0][i]]
+        elif move == "b":
+            tempRotBack = [self.rubiksCube[3][0],
+                           self.rubiksCube[3][1],
+                           self.rubiksCube[3][2]]
+            for i in range(len(tempRotBack)):
+                self.rubiksCube[3][i] = [tempRotBack[0][2-i], tempRotBack[1][2-i], tempRotBack[2][2-i]]
 
 
     def main(self):
