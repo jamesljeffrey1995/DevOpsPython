@@ -2,8 +2,7 @@ import random
 import pytest
 import time
 
-WelcomeMessage = "RUBIKS CUBE CONSOLE"
-x = WelcomeMessage.center(124," ")
+WelcomeMessage = ["---------------------","| RUBIKS CUBE CONSOLE |","---------------------"]
 rotateSide = [[4, 1, 5, 3], [1, 5, 3, 4]] #These are algorithms to iterate through the sides
 rotateTop = [[0,1,2,3],[1,2,3,0]]
 rotateFront = [[0,4,2,5],[4,2,5,0]]
@@ -194,7 +193,8 @@ def introduction():
     print("x = Rotate on x axis towards you \ny = Rotate on y axis to the left")
     print("z = Rotates on z axis to the left")
     time.sleep(10)
-    print(x)
+    for i in range(len(WelcomeMessage)):
+        print(WelcomeMessage[i].center(127," "))
 
 
 if __name__ == "__main__":
