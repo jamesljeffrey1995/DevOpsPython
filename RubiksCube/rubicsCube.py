@@ -1,7 +1,10 @@
 import random
 import pytest
+import time
 
-rotateSide = [[4, 1, 5, 3], [1, 5, 3, 4]]
+WelcomeMessage = "RUBIKS CUBE CONSOLE"
+x = WelcomeMessage.center(124," ")
+rotateSide = [[4, 1, 5, 3], [1, 5, 3, 4]] #These are algorithms to iterate through the sides
 rotateTop = [[0,1,2,3],[1,2,3,0]]
 rotateFront = [[0,4,2,5],[4,2,5,0]]
 
@@ -25,14 +28,14 @@ class rubiksEnv:
             [4, 4, 4]],
         5: [[5, 5, 5],
             [5, 5, 5],
-            [5, 5, 5]],
+            [5, 5, 5]], #This creates 6x3x3 list which imitates a rubiks cube
 
     }
 
     def __init__(self):
         for i in range(350):
-            a = random.randint(0, 5)
-            b = random.randint(0, 2)
+            a = random.randint(0, 5) #This randomises the cube but doesnt change the middle square of each
+            b = random.randint(0, 2) #face
             c = random.randint(0, 2)
             d = random.randint(0, 5)
             e = random.randint(0, 2)
@@ -54,7 +57,7 @@ class rubiksEnv:
 
     def step(self, move):
         if move == "d":
-            tempRot = [self.rubiksCube[5][0],
+            tempRot = [self.rubiksCube[5][0], #tempstorage to allow for rotation of a face
                        self.rubiksCube[5][1],
                        self.rubiksCube[5][2]]
             temp = ["", "", "", ""]
@@ -62,13 +65,13 @@ class rubiksEnv:
                 if i < 3:
                     temp[i + 1] = self.rubiksCube[i][2]
                 else:
-                    temp[0] = self.rubiksCube[i][2]
+                    temp[0] = self.rubiksCube[i][2] #shifts everything to the right and puts last to first
             for i in range(len(temp)):
-                self.rubiksCube[i][2] = temp[i]
+                self.rubiksCube[i][2] = temp[i] #Replaces the bottom row for all relevant sides
             for i in range(len(tempRot)):
-                self.rubiksCube[5][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]]
-                #self.rubiksCube[5][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
-        elif move == "u":
+                self.rubiksCube[5][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]]#This rotates anti-clockwise
+                #self.rubiksCube[5][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]] #This rotates clockwise
+        elif move == "u": #Same as d but for top line and top face
             tempRot = [self.rubiksCube[4][0],
                        self.rubiksCube[4][1],
                        self.rubiksCube[4][2]]
@@ -86,21 +89,22 @@ class rubiksEnv:
                 self.rubiksCube[4][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
         elif move == "l":
             tempLeft = []
-            tempRot = [self.rubiksCube[2][0],
+            tempRot = [self.rubiksCube[2][0],#Same before for face rotation
                        self.rubiksCube[2][1],
                        self.rubiksCube[2][2]]
             for i in range(4):
-                tempLeft.append([self.rubiksCube[int(rotateSide[0][i])][0][0],
-                                 self.rubiksCube[int(rotateSide[0][i])][1][0],
-                                 self.rubiksCube[int(rotateSide[0][i])][2][0]])
+                tempLeft.append([self.rubiksCube[int(rotateSide[0][i])][0][0], #uses the algorithm stored in a list
+                                 self.rubiksCube[int(rotateSide[0][i])][1][0], #to iterate through certain faces
+                                 self.rubiksCube[int(rotateSide[0][i])][2][0]]) #and store them
             for i in range(4):
                 for e in range(3):
-                    self.rubiksCube[int(rotateSide[1][i])][e][0] = tempLeft[i][e]
+                    self.rubiksCube[int(rotateSide[1][i])][e][0] = tempLeft[i][e] #iterates through memory val 1 of the
+                    #algorthim allowing for the right values to be stored in the right place
             for i in range(len(tempRot)):
                 #self.rubiksCube[2][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]]
                 self.rubiksCube[2][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
         elif move == "r":
-            tempLeft = []
+            tempLeft = [] #Same as l
             tempRot = [self.rubiksCube[0][0],
                        self.rubiksCube[0][1],
                        self.rubiksCube[0][2]]
@@ -115,7 +119,7 @@ class rubiksEnv:
                 self.rubiksCube[0][i] = [tempRot[0][2-i], tempRot[1][2-i], tempRot[2][2-i]]
                 #self.rubiksCube[2][i] = [tempRot[2][i], tempRot[1][i], tempRot[0][i]]
         elif move =="x":
-            tempXAxis = []
+            tempXAxis = [] #All the same concept as l and r
             tempRotRight = [self.rubiksCube[0][0],
                             self.rubiksCube[0][1],
                             self.rubiksCube[0][2]]
@@ -177,14 +181,23 @@ class rubiksEnv:
 
 
     def main(self):
-        self.displayCube()
+        self.displayCube() #infinite loop to allow for updated cube
         while True:
             move = input()
             self.step(move)
             self.displayCube()
+
 def introduction():
-    print("")
+    print("l = Left face rotate clockwise \nr = Right face rotate anti-clockwise")
+    print("u = Top Face rotate clockwise \nd = Bottom face rotate anti-clockwise")
+    print("f = Front face rotate clockwise \nb = Back face rotate anti-clockwise")
+    print("x = Rotate on x axis towards you \ny = Rotate on y axis to the left")
+    print("z = Rotates on z axis to the left")
+    time.sleep(10)
+    print(x)
+
 
 if __name__ == "__main__":
+    introduction()
     cube = rubiksEnv()
     cube.main()
