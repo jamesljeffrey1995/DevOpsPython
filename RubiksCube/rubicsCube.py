@@ -4,8 +4,8 @@ import time
 
 WelcomeMessage = ["---------------------","| RUBIKS CUBE CONSOLE |","---------------------"]
 rotateSide = [[4, 1, 5, 3], [1, 5, 3, 4]] #These are algorithms to iterate through the sides
-rotateTop = [[0,1,2,3],[1,2,3,0]]
-rotateFront = [[0,4,2,5],[4,2,5,0]]
+rotateTop = [[0, 1, 2, 3],[1, 2, 3, 0]]
+rotateFront = [[0, 4, 2, 5],[4, 2, 5, 0]]
 
 
 class rubiksEnv:

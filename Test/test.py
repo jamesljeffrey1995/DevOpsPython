@@ -1,7 +1,6 @@
-in Factorial.py import factorialCalc
+from Challengeoftheday import Factorial
 import pytest
 
-def f():
-	return 8
+
 def testAnswer():
-	assert f()==8
+	assert Factorial.factorialCalc(4) == 24
