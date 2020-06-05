@@ -1,6 +1,6 @@
 
 
-def countVowels(word):
+def countVowelsCalc(word):
 	vowels = "aeiou"
 	count = 0
 	for i in range(len(word)):
